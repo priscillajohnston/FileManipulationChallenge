@@ -1,21 +1,42 @@
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class FileHandlingActivity {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        String data = "priscilla's data 676767!!!";
+        String fileName1 = "file1";
+        String fileName2 = "file2";
+        String fileName3 = "file3";
         // Your code here
-        
+
         // a. Create main directory
-        
+        File mainDir = new File("main");
+        mainDir.mkdir();
+
         // b. Create three text files
-        
+        File file1 = new File(fileName1);
+        file1.createNewFile();
+        File file2 = new File(fileName2);
+        file2.createNewFile();
+        File file3 = new File(fileName3);
+        file3.createNewFile();
+
         // c. Write messages to files
-        
+       // Using Files (java.nio.file)
+        try {
+            Files.write(Paths.get(fileName1), data.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // d. Read and display file contents
-        
+
         // e. Create backup directory
-        
+
         // f. Copy contents to backup file
-        
+
         // g. List all files in both directories
     }
 }
