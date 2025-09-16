@@ -34,6 +34,8 @@ public class FileHandlingActivity {
         // d. Read and display file contents
 
         // e. Create backup directory
+        File backupDir = new File("backup");
+        backupDir.mkdir();
 
         // f. Copy contents to backup file
 
