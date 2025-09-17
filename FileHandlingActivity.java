@@ -31,11 +31,6 @@ public class FileHandlingActivity {
 
         // c. Write messages to files
        // Using Files (java.nio.file)
-        try {
-            Files.write(Paths.get("JavaFileSystem/" + file1.getName()), data.getBytes(StandardCharsets.UTF_8));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         try {
             Files.write(Paths.get("JavaFileSystem/" + fileName2), "matthew sixseven".getBytes(StandardCharsets.UTF_8));
@@ -64,14 +59,22 @@ public class FileHandlingActivity {
         // f. Copy contents to backup file
         File backupFile = new File(backupDir.getName(), "backup.txt"); 
         backupFile.createNewFile();
-        
-      
-        File[] Mainfiles = mainDir.listFiles();
-        for(File file : Mainfiles){
-            Path source = file.toPath();
-            Path destination = backupDir.toPath().resolve("backup.txt");
-            Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
-        }//only a small issue 
+
+       String str = "";
+        File[] mainFiles = mainDir.listFiles();
+        for(File file: files ){
+            Path filePath = mainDir.toPath().resolve(file.getName());
+            byte[] fileBytes = Files.readAllBytes(filePath);
+            for(int i = 0; i<fileBytes.length; i++){
+            str+= (char)fileBytes[i];
+            }
+        }
+        try {
+            Files.write(Paths.get("./" +backupFile),str.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         // g. List all files in both directories
         File[] Bfiles = backupDir.listFiles();
@@ -79,7 +82,7 @@ public class FileHandlingActivity {
             System.out.println("File " + file.getName());
         }
         
-        for(File file : Mainfiles){
+        for(File file : mainFiles){
             System.out.println("File " + file.getName());
         }
 
