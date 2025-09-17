@@ -22,29 +22,29 @@ public class FileHandlingActivity {
         mainDir.mkdir();
 
         // b. Create three text files
-        File file1 = new File(fileName1);
+        File file1 = new File("JavaFileSystem", fileName1);
         file1.createNewFile();
-        File file2 = new File(fileName2);
+        File file2 = new File("JavaFileSystem", fileName2);
         file2.createNewFile();
-        File file3 = new File(fileName3);
+        File file3 = new File( "JavaFileSystem", fileName3);
         file3.createNewFile();
 
         // c. Write messages to files
        // Using Files (java.nio.file)
         try {
-            Files.write(Paths.get(fileName1), data.getBytes(StandardCharsets.UTF_8));
+            Files.write(Paths.get("JavaFileSystem/" + file1.getName()), data.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try {
-            Files.write(Paths.get(fileName2), "matthew sixseven".getBytes(StandardCharsets.UTF_8));
+            Files.write(Paths.get("JavaFileSystem/" + fileName2), "matthew sixseven".getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try {
-            Files.write(Paths.get(fileName3), "hiiiiiii".getBytes(StandardCharsets.UTF_8));
+            Files.write(Paths.get("JavaFileSystem/" + fileName3), "hiiiiiii".getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,7 +52,7 @@ public class FileHandlingActivity {
         // d. Read and display file contents
         File[] files = mainDir.listFiles();
         for(File file: files ){
-            Path filePath = Paths.get("./" + file.getName());
+            Path filePath = mainDir.toPath().resolve(file.getName());
             byte[] fileBytes = Files.readAllBytes(filePath);
             System.out.println(new String(fileBytes));
         }
@@ -62,24 +62,25 @@ public class FileHandlingActivity {
         backupDir.mkdir();
 
         // f. Copy contents to backup file
-        File backupFile = new File(backupDir.getName(), "backup.txt");
+        File backupFile = new File(backupDir.getName(), "backup.txt"); 
         backupFile.createNewFile();
-
+        
+      
         File[] Mainfiles = mainDir.listFiles();
         for(File file : Mainfiles){
-            Path source = Paths.get(file.getName());
-            Path destination = Paths.get("backup.txt");
-            Files.copy(source, destination);
-        }
+            Path source = file.toPath();
+            Path destination = backupDir.toPath().resolve("backup.txt");
+            Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
+        }//only a small issue 
 
         // g. List all files in both directories
         File[] Bfiles = backupDir.listFiles();
         for(File file : Bfiles){
-            System.out.println("File: " + file.getName());
+            System.out.println("File " + file.getName());
         }
         
         for(File file : Mainfiles){
-            System.out.println("File: " + file.getName());
+            System.out.println("File " + file.getName());
         }
 
     }
