@@ -4,6 +4,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class FileHandlingActivity {
     public static void main(String[] args) throws IOException {
@@ -11,6 +14,7 @@ public class FileHandlingActivity {
         String fileName1 = "notes.txt";
         String fileName2 = "data.txt";
         String fileName3 = "log.txt";
+        debugFileOperation();
         // Your code here
 
         // a. Create main directory
@@ -78,5 +82,19 @@ public class FileHandlingActivity {
             System.out.println("File: " + file.getName());
         }
 
+    }
+
+    public static void debugFileOperation(){
+        try {
+            // Creating a file with an invalid name (forward slash is invalid for file names on many OS)
+            File file = new File("main/fileName.txt");
+            // Attempting to write to the invalid file
+            FileWriter writer = new FileWriter(file);
+            writer.write("Will this fail?");
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+            e.printStackTrace(); 
+        }
     }
 }
