@@ -8,13 +8,13 @@ import java.nio.file.StandardCopyOption;
 public class FileHandlingActivity {
     public static void main(String[] args) throws IOException {
         String data = "priscilla's data 676767!!!";
-        String fileName1 = "file1";
-        String fileName2 = "file2";
-        String fileName3 = "file3";
+        String fileName1 = "notes.txt";
+        String fileName2 = "data.txt";
+        String fileName3 = "log.txt";
         // Your code here
 
         // a. Create main directory
-        File mainDir = new File("main");
+        File mainDir = new File("JavaFileSystem");
         mainDir.mkdir();
 
         // b. Create three text files
@@ -33,6 +33,18 @@ public class FileHandlingActivity {
             e.printStackTrace();
         }
 
+        try {
+            Files.write(Paths.get(fileName2), "matthew sixseven".getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Files.write(Paths.get(fileName3), "hiiiiiii".getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // d. Read and display file contents
         File[] files = mainDir.listFiles();
         for(File file: files ){
@@ -42,17 +54,17 @@ public class FileHandlingActivity {
         }
 
         // e. Create backup directory
-        File backupDir = new File("backup");
+        File backupDir = new File("Backup");
         backupDir.mkdir();
 
         // f. Copy contents to backup file
-        File backupFile = new File(backupDir.getName(), "backupFile");
+        File backupFile = new File(backupDir.getName(), "backup.txt");
         backupFile.createNewFile();
 
         File[] Mainfiles = mainDir.listFiles();
         for(File file : Mainfiles){
             Path source = Paths.get(file.getName());
-            Path destination = Paths.get(backupFile.getName());
+            Path destination = Paths.get("backup.txt");
             Files.copy(source, destination);
         }
 
