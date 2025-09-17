@@ -1,7 +1,9 @@
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class FileHandlingActivity {
     public static void main(String[] args) throws IOException {
@@ -32,13 +34,37 @@ public class FileHandlingActivity {
         }
 
         // d. Read and display file contents
+        File[] files = mainDir.listFiles();
+        for(File file: files ){
+            Path filePath = Paths.get("./" + file.getName());
+            byte[] fileBytes = Files.readAllBytes(filePath);
+            System.out.println(new String(fileBytes));
+        }
 
         // e. Create backup directory
         File backupDir = new File("backup");
         backupDir.mkdir();
 
         // f. Copy contents to backup file
+        File backupFile = new File(backupDir.getName(), "backupFile");
+        backupFile.createNewFile();
+
+        File[] Mainfiles = mainDir.listFiles();
+        for(File file : Mainfiles){
+            Path source = Paths.get(file.getName());
+            Path destination = Paths.get(backupFile.getName());
+            Files.copy(source, destination);
+        }
 
         // g. List all files in both directories
+        File[] Bfiles = backupDir.listFiles();
+        for(File file : Bfiles){
+            System.out.println("File: " + file.getName());
+        }
+        
+        for(File file : Mainfiles){
+            System.out.println("File: " + file.getName());
+        }
+
     }
 }
